@@ -1,0 +1,441 @@
+:root {
+    --bg-color: #000000;
+    /* Deep Black */
+    --text-color: #ffffff;
+    /* White Text */
+    --accent-color: #ff7722;
+    /* Vibrant Orange */
+    --secondary-accent: #ff9944;
+    /* Lighter Orange */
+    --card-bg: #111111;
+    /* Dark Grey Cards */
+    --border-color: #333333;
+    /* Dark Border */
+    --font-heading: 'Inter', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+#canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+    opacity: 0.4;
+    /* Subtle background */
+}
+
+#canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+    background: #000000;
+    /* Fallback Black */
+}
+
+main {
+    position: relative;
+    z-index: 1;
+}
+
+/* Typography */
+h1,
+h2,
+h3 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+/* Hero Section */
+#hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 4rem;
+    /* More horizontal padding */
+    position: relative;
+    max-width: 1400px;
+    /* Wider container */
+    margin: 0 auto;
+}
+
+.hero-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 2rem;
+    z-index: 2;
+}
+
+.hero-text {
+    flex: 1;
+    text-align: left;
+    max-width: 600px;
+}
+
+.hero-image-container {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    /* Align to left */
+    position: relative;
+    height: 80vh;
+    align-items: center;
+}
+
+.image-glow {
+    display: none;
+    /* Remove glow for cleaner look */
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.2;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.3;
+        transform: scale(1.1);
+    }
+
+    100% {
+        opacity: 0.2;
+        transform: scale(1);
+    }
+}
+
+.profile-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+    object-position: center 15%;
+    /* User requested object-[center_15%] */
+    filter: grayscale(100%);
+    border: none;
+    box-shadow: none;
+    transition: all 1s ease;
+    /* User requested duration-1000 */
+}
+
+.profile-image:hover {
+    transform: translate(-5px, -5px);
+    filter: grayscale(0%);
+}
+
+/* ... (Existing styles for h1, subtitle, etc. omitted for brevity if unchanged, but I'll keep the context clean) ... */
+
+/* Timeline Section */
+#timeline {
+    padding: 6rem 2rem;
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* ... */
+
+.timeline-item {
+    padding: 10px 50px;
+    position: relative;
+    background-color: inherit;
+    width: 50%;
+    box-sizing: border-box;
+    /* Removed opacity: 0 and transform for immediate visibility to fix user issue */
+    opacity: 1;
+    transform: none;
+    transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.timeline-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.left {
+    left: 0;
+}
+
+.right {
+    left: 50%;
+}
+
+/* The central line */
+.timeline-container::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    /* Slightly thicker */
+    background-color: var(--accent-color);
+    /* Use accent color for visibility */
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -2px;
+    /* Center adjustment */
+    z-index: 0;
+    /* Behind items but above background */
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+    /* Glow */
+}
+
+/* The dots on the timeline */
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    right: -8px;
+    background-color: var(--bg-color);
+    border: 3px solid var(--accent-color);
+    top: 22px;
+    border-radius: 50%;
+    z-index: 1;
+    transition: background-color 0.3s ease;
+}
+
+.right::after {
+    left: -8px;
+}
+
+.timeline-item:hover::after {
+    background-color: var(--accent-color);
+}
+
+.content {
+    padding: 25px;
+    background-color: rgba(17, 17, 17, 0.8);
+    /* Semi-transparent Dark */
+    position: relative;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    backdrop-filter: blur(5px);
+    /* Glass effect */
+    box-shadow: none;
+}
+
+.content:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-color);
+}
+
+.content h3 {
+    margin-bottom: 0.5rem;
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+.content .date {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.content p {
+    color: #aaa;
+    font-size: 0.95rem;
+}
+
+.skills-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1rem;
+}
+
+.skills-list li {
+    background: #222;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: #ddd;
+    border: 1px solid #333;
+    transition: all 0.2s ease;
+}
+
+.skills-list li:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+h1 {
+    font-size: 6rem;
+    /* Bigger title */
+    line-height: 1;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(to right, #fff, #aaa);
+    /* Light gradient for dark theme */
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: block;
+}
+
+.subtitle {
+    font-size: 2rem;
+    color: var(--accent-color);
+    margin-bottom: 2rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.hero-description {
+    font-size: 1.2rem;
+    color: #888;
+    /* Light grey for readability on dark bg */
+    max-width: 500px;
+    margin-bottom: 3rem;
+    line-height: 1.8;
+}
+
+.hero-tags {
+    display: flex;
+    gap: 1rem;
+}
+
+.experience-tag {
+    font-size: 1rem;
+    color: #fff;
+    /* White text */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border: 1px solid var(--border-color);
+    padding: 1rem 2rem;
+    border-radius: 0;
+    /* Rectangular buttons */
+    background: transparent;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.experience-tag:hover {
+    border-color: var(--accent-color);
+    background: var(--accent-color);
+    color: #000;
+    /* Black text on hover */
+}
+
+/* Contact Section */
+#contact {
+    padding: 6rem 2rem;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    /* More space between icons */
+    flex-wrap: wrap;
+}
+
+.contact-item {
+    font-size: 2.5rem;
+    /* Larger icons */
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.contact-item:hover {
+    color: var(--accent-color);
+    background: rgba(255, 119, 34, 0.1);
+    transform: translateY(-5px);
+}
+
+.contact-item i {
+    font-size: 1.8rem;
+}
+
+.contact-btn {
+    padding: 1rem 2.5rem;
+    border: 1px solid var(--border-color);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    background: var(--card-bg);
+}
+
+.contact-btn:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    transform: translateY(-3px);
+}
+
+footer {
+    color: #444;
+    font-size: 0.9rem;
+    border-top: 1px solid #111;
+    padding-top: 2rem;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 3rem;
+    }
+
+    .timeline-container::after {
+        left: 30px;
+    }
+
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 20px;
+    }
+
+    .timeline-item::after {
+        left: 22px;
+    }
+
+    .left::after,
+    .right::after {
+        left: 22px;
+    }
+
+    .right {
+        left: 0%;
+    }
+}
