@@ -165,9 +165,8 @@ h3 {
     background-color: inherit;
     width: 50%;
     box-sizing: border-box;
-    /* Removed opacity: 0 and transform for immediate visibility to fix user issue */
-    opacity: 1;
-    transform: none;
+    opacity: 0;
+    transform: translateY(30px);
     transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -229,19 +228,18 @@ h3 {
 .content {
     padding: 25px;
     background-color: rgba(17, 17, 17, 0.8);
-    /* Semi-transparent Dark */
     position: relative;
     border-radius: 8px;
     border: 1px solid var(--border-color);
-    transition: transform 0.3s ease, border-color 0.3s ease;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     backdrop-filter: blur(5px);
-    /* Glass effect */
     box-shadow: none;
 }
 
 .content:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px) scale(1.02);
     border-color: var(--accent-color);
+    box-shadow: 0 10px 30px rgba(255, 119, 34, 0.2);
 }
 
 .content h3 {
@@ -410,12 +408,143 @@ footer {
     padding-top: 2rem;
 }
 
-/* Responsive Design */
-@media screen and (max-width: 768px) {
-    h1 {
-        font-size: 3rem;
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.6;
+}
+
+.mouse {
+    width: 24px;
+    height: 40px;
+    border: 2px solid var(--accent-color);
+    border-radius: 12px;
+    position: relative;
+}
+
+.mouse::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: scroll 1.5s infinite;
+}
+
+@keyframes scroll {
+    0% {
+        top: 6px;
+        opacity: 1;
     }
 
+    100% {
+        top: 28px;
+        opacity: 0;
+    }
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 4rem;
+    color: #fff;
+}
+
+.section-title span {
+    color: var(--accent-color);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+    #hero {
+        padding: 2rem;
+        min-height: auto;
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
+
+    .hero-container {
+        flex-direction: column-reverse;
+        gap: 3rem;
+    }
+
+    .hero-text {
+        text-align: center;
+        max-width: 100%;
+    }
+
+    .hero-image-container {
+        width: 100%;
+        height: 400px;
+        justify-content: center;
+    }
+
+    .profile-image {
+        max-width: 350px;
+        max-height: 400px;
+    }
+
+    h1 {
+        font-size: 4rem;
+    }
+
+    .subtitle {
+        font-size: 1.5rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+    }
+
+    .hero-tags {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #hero {
+        padding: 2rem 1rem;
+    }
+
+    .hero-image-container {
+        height: 300px;
+    }
+
+    .profile-image {
+        max-width: 280px;
+        max-height: 300px;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    .subtitle {
+        font-size: 1.2rem;
+    }
+
+    .hero-description {
+        font-size: 0.95rem;
+    }
+
+    .experience-tag {
+        font-size: 0.85rem;
+        padding: 0.7rem 1.2rem;
+    }
+
+    /* Timeline Mobile Styles */
     .timeline-container::after {
         left: 30px;
     }
@@ -424,6 +553,8 @@ footer {
         width: 100%;
         padding-left: 70px;
         padding-right: 20px;
+        padding-top: 10px;
+        padding-bottom: 10px;
     }
 
     .timeline-item::after {
@@ -437,5 +568,95 @@ footer {
 
     .right {
         left: 0%;
+    }
+
+    .content {
+        padding: 20px;
+    }
+
+    .content h3 {
+        font-size: 1.1rem;
+    }
+
+    .content p {
+        font-size: 0.9rem;
+    }
+
+    .skills-list {
+        gap: 0.4rem;
+    }
+
+    .skills-list li {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.6rem;
+    }
+
+    /* Contact Mobile */
+    .contact-links {
+        gap: 2.5rem;
+    }
+
+    .contact-item {
+        width: 50px;
+        height: 50px;
+    }
+
+    .contact-item i {
+        font-size: 1.5rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .scroll-indicator {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .hero-description {
+        font-size: 0.9rem;
+        margin-bottom: 2rem;
+    }
+
+    .hero-image-container {
+        height: 250px;
+    }
+
+    .profile-image {
+        max-width: 220px;
+        max-height: 250px;
+    }
+
+    .experience-tag {
+        font-size: 0.75rem;
+        padding: 0.6rem 1rem;
+    }
+
+    .section-title {
+        font-size: 1.75rem;
+    }
+
+    .contact-links {
+        gap: 2rem;
+    }
+
+    .contact-item {
+        width: 45px;
+        height: 45px;
+    }
+
+    .contact-item i {
+        font-size: 1.3rem;
     }
 }
